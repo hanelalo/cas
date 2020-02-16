@@ -1,11 +1,15 @@
 package com.hanelalo.cas.server.endpoint.api;
 
+import com.google.common.collect.Lists;
+import com.hanelalo.cas.server.base.CasServerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
+import java.util.List;
 
 @ApiModel("Token 响应")
-public class AccessTokenResp implements Serializable {
+public class AccessTokenResp extends CasServerResult {
+
   private static final long serialVersionUID = 3319497958037464600L;
   @ApiModelProperty("用户")
   private String user;
@@ -14,7 +18,7 @@ public class AccessTokenResp implements Serializable {
   @ApiModelProperty("token")
   private String accessToken;
   @ApiModelProperty("用户角色")
-  private String roles;
+  private List<String> roles = Lists.newArrayList();
   @ApiModelProperty("刷新token")
   private RefreshToken refreshToken;
 
@@ -69,7 +73,7 @@ public class AccessTokenResp implements Serializable {
   /**
    * Get roles
    **/
-  public String getRoles() {
+  public List<String> getRoles() {
     return roles;
   }
 
@@ -77,7 +81,7 @@ public class AccessTokenResp implements Serializable {
    * @param roles
    * @return this
    **/
-  public AccessTokenResp setRoles(String roles) {
+  public AccessTokenResp setRoles(List<String> roles) {
     this.roles = roles;
     return this;
   }

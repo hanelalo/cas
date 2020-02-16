@@ -7,12 +7,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="cas-client" />
         <module name="cas-server" />
+        <module name="cas-client-web" />
         <module name="cas-server-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="cas-base" target="1.8" />
+      <module name="cas-client" target="1.8" />
+      <module name="cas-client-web" target="1.8" />
       <module name="cas-server" target="1.8" />
       <module name="cas-server-web" target="1.8" />
     </bytecodeTargetLevel>
@@ -20,6 +24,8 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="cas-base" options="-parameters" />
+      <module name="cas-client" options="-parameters" />
+      <module name="cas-client-web" options="-parameters" />
       <module name="cas-server" options="-parameters" />
       <module name="cas-server-web" options="-parameters" />
     </option>

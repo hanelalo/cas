@@ -1,13 +1,13 @@
 package com.hanelalo.cas.server.endpoint.api;
 
 import com.google.common.collect.Lists;
+import com.hanelalo.cas.server.base.CasServerResult;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.io.Serializable;
 import java.util.List;
 
 @ApiModel("TokenInfo响应对象")
-public class TokenInfoResp implements Serializable {
+public class TokenInfoResp extends CasServerResult {
 
   private static final long serialVersionUID = -8991066570192941876L;
   @ApiModelProperty("客户端ID")

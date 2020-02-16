@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties(
-    prefix = "mall.auth",
+    prefix = "cas.server",
     ignoreInvalidFields = true)
 public class AuthServerProperties {
 
@@ -19,59 +19,115 @@ public class AuthServerProperties {
       "/swagger-resources/**", "/v2/**", "/swagger-ui.html#!/**", "/webjars/**",
       "/swagger-resources/**"};
 
+  /**
+   * Get publicKeyResourcePath
+   **/
   public String getPublicKeyResourcePath() {
     return publicKeyResourcePath;
   }
 
-  public void setPublicKeyResourcePath(String publicKeyResourcePath) {
+  /**
+   * @param publicKeyResourcePath
+   * @return this
+   **/
+  public AuthServerProperties setPublicKeyResourcePath(String publicKeyResourcePath) {
     this.publicKeyResourcePath = publicKeyResourcePath;
+    return this;
   }
 
+  /**
+   * Get privateKeyResourcePath
+   **/
   public String getPrivateKeyResourcePath() {
     return privateKeyResourcePath;
   }
 
-  public void setPrivateKeyResourcePath(String privateKeyResourcePath) {
+  /**
+   * @param privateKeyResourcePath
+   * @return this
+   **/
+  public AuthServerProperties setPrivateKeyResourcePath(String privateKeyResourcePath) {
     this.privateKeyResourcePath = privateKeyResourcePath;
+    return this;
   }
 
+  /**
+   * Get clientTable
+   **/
   public String getClientTable() {
     return clientTable;
   }
 
-  public void setClientTable(String clientTable) {
+  /**
+   * @param clientTable
+   * @return this
+   **/
+  public AuthServerProperties setClientTable(String clientTable) {
     this.clientTable = clientTable;
+    return this;
   }
 
+  /**
+   * Get swaggerEnable
+   **/
   public boolean isSwaggerEnable() {
     return swaggerEnable;
   }
 
-  public void setSwaggerEnable(boolean swaggerEnable) {
+  /**
+   * @param swaggerEnable
+   * @return this
+   **/
+  public AuthServerProperties setSwaggerEnable(boolean swaggerEnable) {
     this.swaggerEnable = swaggerEnable;
+    return this;
   }
 
+  /**
+   * Get validTime
+   **/
   public long getValidTime() {
     return validTime;
   }
 
-  public void setValidTime(long validTime) {
+  /**
+   * @param validTime
+   * @return this
+   **/
+  public AuthServerProperties setValidTime(long validTime) {
     this.validTime = validTime;
+    return this;
   }
 
+  /**
+   * Get interceptorUrl
+   **/
   public String[] getInterceptorUrl() {
     return interceptorUrl;
   }
 
-  public void setInterceptorUrl(String[] interceptorUrl) {
+  /**
+   * @param interceptorUrl
+   * @return this
+   **/
+  public AuthServerProperties setInterceptorUrl(String[] interceptorUrl) {
     this.interceptorUrl = interceptorUrl;
+    return this;
   }
 
+  /**
+   * Get interceptorExcludeUrl
+   **/
   public String[] getInterceptorExcludeUrl() {
     return interceptorExcludeUrl;
   }
 
-  public void setInterceptorExcludeUrl(String[] interceptorExcludeUrl) {
+  /**
+   * @param interceptorExcludeUrl
+   * @return this
+   **/
+  public AuthServerProperties setInterceptorExcludeUrl(String[] interceptorExcludeUrl) {
     this.interceptorExcludeUrl = interceptorExcludeUrl;
+    return this;
   }
 }

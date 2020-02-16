@@ -1,5 +1,6 @@
 package com.hanelalo.cas.server.service.impl;
 
+import com.hanelalo.cas.server.base.exception.CasServerPreconditions;
 import com.hanelalo.cas.server.base.token.Payload;
 import com.hanelalo.cas.server.base.exception.CasServerException;
 import com.hanelalo.cas.server.base.exception.CasServerExceptionEnum;
@@ -30,10 +31,7 @@ public class TokenInfoServiceImpl implements TokenInfoService {
     long createDate = payload.getCreateDate();
     // 获取配置的token过期时间而不是在payload中的过期时间
     long validTime = properties.getValidTime();
-    if (createDate + validTime < System.currentTimeMillis()) {
-      throw new CasServerException(CasServerExceptionEnum.TOKEN_INVALID.getErrorCode(),
-          CasServerExceptionEnum.TOKEN_INVALID.getErrorMsg());
-    }
+    CasServerPreconditions.checkTokenInvalid(createDate + validTime > System.currentTimeMillis());
   }
 
   private TokenInfo convert2TokenInfo(Payload payload) {

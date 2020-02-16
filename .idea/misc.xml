@@ -5,6 +5,9 @@
       <list>
         <option value="$PROJECT_DIR$/cas-server/pom.xml" />
         <option value="$PROJECT_DIR$/cas-server-web/pom.xml" />
+        <option value="$PROJECT_DIR$/cas-client/pom.xml" />
+        <option value="$PROJECT_DIR$/cas-client-web/pom.xml" />
+        <option value="$PROJECT_DIR$/cas-base/pom.xml" />
       </list>
     </option>
   </component>

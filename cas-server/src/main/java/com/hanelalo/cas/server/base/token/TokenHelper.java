@@ -56,8 +56,7 @@ public class TokenHelper {
     try {
       value = mapper.writeValueAsString(payload);
     } catch (JsonProcessingException e) {
-      throw new CasServerException(CasServerExceptionEnum.USER_INVALID.getErrorCode(),
-          CasServerExceptionEnum.USER_INVALID.getErrorMsg());
+      throw new CasServerException(CasServerExceptionEnum.USER_INVALID);
     }
     Jwt jwt = JwtHelper.encode(value, signer, headers);
     return jwt.getEncoded();
@@ -69,8 +68,7 @@ public class TokenHelper {
     try {
       return mapper.readValue(jwt.getClaims(), Payload.class);
     } catch (JsonProcessingException e) {
-      throw new CasServerException(CasServerExceptionEnum.TOKEN_INVALID.getErrorCode(),
-          CasServerExceptionEnum.TOKEN_INVALID.getErrorMsg());
+      throw new CasServerException(CasServerExceptionEnum.TOKEN_INVALID);
     }
   }
 

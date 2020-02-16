@@ -1,5 +1,6 @@
 package com.hanelalo.cas.server.service.impl;
 
+import com.hanelalo.cas.server.base.exception.CasServerPreconditions;
 import com.hanelalo.cas.server.base.token.Payload;
 import com.hanelalo.cas.server.base.exception.CasServerException;
 import com.hanelalo.cas.server.base.exception.CasServerExceptionEnum;
@@ -33,9 +34,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
   private void checkToken(Payload payload) {
     long createDate = payload.getCreateDate();
     long validTime = properties.getValidTime();
-    if (createDate + validTime < System.currentTimeMillis()) {
-      throw new CasServerException(CasServerExceptionEnum.REFRESH_TOKEN_INVALID.getErrorCode(),
-          CasServerExceptionEnum.REFRESH_TOKEN_INVALID.getErrorMsg());
-    }
+    CasServerPreconditions
+        .checkRefreshTokenInvalid(createDate + validTime > System.currentTimeMillis());
   }
 }

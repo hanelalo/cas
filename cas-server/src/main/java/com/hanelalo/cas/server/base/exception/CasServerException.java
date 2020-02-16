@@ -7,8 +7,13 @@ public class CasServerException extends RuntimeException {
   private String errorMsg;
 
   public CasServerException(String errorCode,String errorMsg){
+    super(errorMsg);
     this.errorCode = errorCode;
     this.errorMsg = errorMsg;
+  }
+
+  public CasServerException(CasServerExceptionEnum exceptionEnum){
+    this(exceptionEnum.getErrorCode(),exceptionEnum.getErrorMsg());
   }
 
   public String getErrorCode() {

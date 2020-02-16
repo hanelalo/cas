@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/cas.iml" filepath="$PROJECT_DIR$/cas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cas-base/cas-base.iml" filepath="$PROJECT_DIR$/cas-base/cas-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cas-client/cas-client.iml" filepath="$PROJECT_DIR$/cas-client/cas-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cas-client-web/cas-client-web.iml" filepath="$PROJECT_DIR$/cas-client-web/cas-client-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/cas-server/cas-server.iml" filepath="$PROJECT_DIR$/cas-server/cas-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/cas-server-web/cas-server-web.iml" filepath="$PROJECT_DIR$/cas-server-web/cas-server-web.iml" />
     </modules>

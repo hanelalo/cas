@@ -2,11 +2,11 @@ package com.hanelalo.cas.server.base.exception;
 
 public enum CasServerExceptionEnum {
 
-  CLIENT_ERROR("CS_0001","客户端校验错误"),
-  USER_INVALID("CS_0002","用户名或密码错误"),
-  UNKNOWN("CS_0003","服务器错误"),
-  TOKEN_INVALID("CS_0004","Token 已过期"),
-  REFRESH_TOKEN_INVALID("CS_0004","Refresh Token 已过期");
+  CLIENT_ERROR("CS_0001","client is invalid"),
+  USER_INVALID("CS_0002","username or password is invalid"),
+  UNKNOWN("CS_0003","server error"),
+  TOKEN_INVALID("CS_0004","token is invalid"),
+  REFRESH_TOKEN_INVALID("CS_0005","refresh token is invalid");
 
   private String errorCode;
   private String errorMsg;

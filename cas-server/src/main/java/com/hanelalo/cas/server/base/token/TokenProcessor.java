@@ -1,11 +1,11 @@
 package com.hanelalo.cas.server.base.token;
 
-import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 import com.hanelalo.cas.server.base.exception.CasServerException;
 import com.hanelalo.cas.server.base.exception.CasServerExceptionEnum;
+import com.hanelalo.cas.server.base.exception.CasServerPreconditions;
 import com.hanelalo.cas.server.client.ClientDetails;
 import com.hanelalo.cas.server.config.AuthServerProperties;
 import com.hanelalo.cas.server.context.CasRequestContext;
@@ -43,14 +43,13 @@ public class TokenProcessor {
   private AccessToken accessToken(Payload payload, Map<String, String> headers) {
     String accessToken = tokenHelper.encode(payload, headers);
     String refreshToken = buildRefreshToken(accessToken, payload);
-    String roles = Joiner.on(",").skipNulls().join(payload.getRoles());
     return new AccessToken()
         .setClientId(payload.getClientId())
         .setAccessToken(accessToken)
         .setRefreshToken(refreshToken)
         .setUser(payload.getUserId())
         .setJti(getJti(accessToken))
-        .setRoles(roles);
+        .setRoles(payload.getRoles());
   }
 
   private String getJti(String accessToken) {
@@ -72,10 +71,7 @@ public class TokenProcessor {
   }
 
   private Payload buildPayLoad(UserDetails details, String accessToken) {
-    if (!(details instanceof DefaultUserDetails)) {
-      throw new CasServerException(CasServerExceptionEnum.CLIENT_ERROR.getErrorCode(),
-          CasServerExceptionEnum.CLIENT_ERROR.getErrorMsg());
-    }
+    CasServerPreconditions.checkClientError(details instanceof DefaultUserDetails);
     DefaultUserDetails defaultUserDetails = (DefaultUserDetails) details;
     ClientDetails client = CasRequestContext.get(ClientDetails.class);
     List<String> roles = details.getRoles().stream()

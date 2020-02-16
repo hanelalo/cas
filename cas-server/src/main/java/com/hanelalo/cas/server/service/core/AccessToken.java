@@ -1,12 +1,16 @@
 package com.hanelalo.cas.server.service.core;
 
+import com.google.common.collect.Lists;
+import java.util.List;
+
 public class AccessToken {
+
   private String user;
   private String clientId;
   private String accessToken;
   private String refreshToken;
   private String jti;
-  private String roles;
+  private List<String> roles = Lists.newArrayList();
 
   /**
    * Get user
@@ -91,7 +95,7 @@ public class AccessToken {
   /**
    * Get roles
    **/
-  public String getRoles() {
+  public List<String> getRoles() {
     return roles;
   }
 
@@ -99,7 +103,7 @@ public class AccessToken {
    * @param roles
    * @return this
    **/
-  public AccessToken setRoles(String roles) {
+  public AccessToken setRoles(List<String> roles) {
     this.roles = roles;
     return this;
   }

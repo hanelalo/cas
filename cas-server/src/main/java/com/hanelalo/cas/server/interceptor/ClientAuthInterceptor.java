@@ -3,6 +3,7 @@ package com.hanelalo.cas.server.interceptor;
 import com.google.common.base.Strings;
 import com.hanelalo.cas.server.base.exception.CasServerException;
 import com.hanelalo.cas.server.base.exception.CasServerExceptionEnum;
+import com.hanelalo.cas.server.base.exception.CasServerPreconditions;
 import com.hanelalo.cas.server.client.ClientDetails;
 import com.hanelalo.cas.server.context.CasApplicationContext;
 import com.hanelalo.cas.server.context.CasRequestContext;
@@ -27,12 +28,12 @@ public class ClientAuthInterceptor implements HandlerInterceptor {
     String authorization = request.getHeader("Authorization");
     if (Strings.isNullOrEmpty(authorization)
         || !authorization.startsWith(AUTHORIZATION_TYPE)) {
-      logger.error("客户端校验失败，缺失 Authorization 请求头");
+      logger.error("client invalid，loss request header Authorization ");
       throw new CasServerException(CasServerExceptionEnum.CLIENT_ERROR.getErrorCode(),
           CasServerExceptionEnum.CLIENT_ERROR.getErrorMsg());
     }
 
-    authorization = authorization.replace(AUTHORIZATION_TYPE,"");
+    authorization = authorization.replace(AUTHORIZATION_TYPE, "");
 
     ClientDetails clientDetails = getClientDetailsInRedis(authorization);
     CasRequestContext.setLocalThreadValue(clientDetails);
@@ -42,11 +43,7 @@ public class ClientAuthInterceptor implements HandlerInterceptor {
   private ClientDetails getClientDetailsInRedis(String authorization) {
     RedisOperator redisOperator = CasApplicationContext.getBean(RedisOperator.class);
     ClientDetails details = redisOperator.getClientDetails(authorization);
-    if (details == null) {
-      logger.error("客户端校验失败，未找到改客户端{}",authorization);
-      throw new CasServerException(CasServerExceptionEnum.CLIENT_ERROR.getErrorCode(),
-          CasServerExceptionEnum.CLIENT_ERROR.getErrorMsg());
-    }
+    CasServerPreconditions.checkClientError(details != null);
     return details;
   }
 }

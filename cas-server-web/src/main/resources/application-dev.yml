@@ -9,3 +9,5 @@ spring:
 mall:
   auth:
     swagger-enable: true
+server:
+  port: 2200

@@ -11,7 +11,7 @@
   </parent>
   <groupId>com.hanelalo</groupId>
   <artifactId>cas-server-web</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.1.0-RELEASE</version>
   <name>cas-server-web</name>
   <description>Demo project for Spring Boot</description>
 

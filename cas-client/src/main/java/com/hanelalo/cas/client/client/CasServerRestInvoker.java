@@ -23,14 +23,23 @@ public class CasServerRestInvoker implements CasServerInvoker {
   @Override
   public TokenInfoResp getTokenInfo(TokenInfoReq req) {
     PropertiesPreconditions.checkClientProperties();
+    MultiValueMap<String, String> headers = buildHeaders();
+    return getTokenInfo(req, headers);
+  }
+
+  private TokenInfoResp getTokenInfo(TokenInfoReq req, MultiValueMap<String, String> headers) {
+    HttpEntity<TokenInfoReq> entity = new HttpEntity<>(req, headers);
+    return restTemplate.postForEntity(properties.getTokenInfoPath(), entity,
+        TokenInfoResp.class).getBody();
+  }
+
+  private MultiValueMap<String, String> buildHeaders() {
     String clientId = properties.getClientId();
     String clientSecret = properties.getClientSecret();
     String authorization = new String(Codecs.b64Encode((clientId + ":" + clientSecret).getBytes()));
     MultiValueMap<String, String> headers = new LinkedMultiValueMap();
     headers.add("Authorization", "Bearer " + authorization);
-    HttpEntity<TokenInfoReq> entity = new HttpEntity<>(req, headers);
-    return restTemplate.postForEntity(properties.getTokenInfoPath(), entity,
-        TokenInfoResp.class).getBody();
+    return headers;
   }
 
 }

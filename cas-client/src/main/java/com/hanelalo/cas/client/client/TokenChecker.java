@@ -17,26 +17,24 @@ public class TokenChecker {
   private static String CS_0004 = "CS_0004";
 
   public void checkToken(TokenInfoResp result, List<String> roles, ModeEnum mode) {
-    if (result.getError() != null) {
-      CasClientPreconditions.checkClientInvalid(!CS_0001.equals(result.getError().getErrorCode()));
-      CasClientPreconditions.checkServerError(!CS_0003.equals(result.getError().getErrorCode()));
-      CasClientPreconditions.checkTokenInvalid(!CS_0004.equals(result.getError().getErrorCode()));
-    }
-    String authRoles = Joiner.on(",")
-        .skipNulls()
-        .join(result.getRoles());
-
+    chechError(result);
+    String authRoles = Joiner.on(",").skipNulls().join(result.getRoles());
     CasClientPreconditions.checkTokenPermission(!Strings.isNullOrEmpty(authRoles));
-
-    roles = roles.stream()
-        .distinct()
-        .collect(Collectors.toList());
+    roles = roles.stream().distinct().collect(Collectors.toList());
     if (mode.equals(ModeEnum.AND)) {
       computeRoleModeAND(authRoles, roles);
     } else if (mode.equals(ModeEnum.NOT)) {
       computeRoleModeNOT(authRoles, roles);
     } else {
       computeRoleModeOR(authRoles, roles);
+    }
+  }
+
+  private void chechError(TokenInfoResp result) {
+    if (result.getError() != null) {
+      CasClientPreconditions.checkClientInvalid(!CS_0001.equals(result.getError().getErrorCode()));
+      CasClientPreconditions.checkServerError(!CS_0003.equals(result.getError().getErrorCode()));
+      CasClientPreconditions.checkTokenInvalid(!CS_0004.equals(result.getError().getErrorCode()));
     }
   }
 

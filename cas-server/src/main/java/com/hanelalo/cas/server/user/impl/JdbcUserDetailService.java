@@ -27,7 +27,6 @@ public class JdbcUserDetailService implements UserDetailService {
 
   private UserDetails convert(User user) {
     DefaultUserDetails details = new DefaultUserDetails();
-
     List<DefaultRole> roles = Splitter
         .on(",").splitToList(user.getRoles())
         .stream().map(role -> new DefaultRole().setRole(role))

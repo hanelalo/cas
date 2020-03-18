@@ -16,15 +16,24 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 public class ClientAuthInterceptor implements HandlerInterceptor {
 
-  ///打印日志
+  //打印日志
   private static final Logger logger = LoggerFactory.getLogger(ClientAuthInterceptor.class);
 
-  private static String AUTHORIZATION_TYPE = "Bearer ";
+  private static final String AUTHORIZATION_TYPE = "Bearer ";
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
       throws Exception {
+    setClientDetails(getAuthorization(request));
+    return true;
+  }
 
+  private void setClientDetails(String authorization) {
+    ClientDetails clientDetails = getClientDetailsInRedis(authorization);
+    CasRequestContext.setLocalThreadValue(clientDetails);
+  }
+
+  private String getAuthorization(HttpServletRequest request) {
     String authorization = request.getHeader("Authorization");
     if (Strings.isNullOrEmpty(authorization)
         || !authorization.startsWith(AUTHORIZATION_TYPE)) {
@@ -34,10 +43,7 @@ public class ClientAuthInterceptor implements HandlerInterceptor {
     }
 
     authorization = authorization.replace(AUTHORIZATION_TYPE, "");
-
-    ClientDetails clientDetails = getClientDetailsInRedis(authorization);
-    CasRequestContext.setLocalThreadValue(clientDetails);
-    return true;
+    return authorization;
   }
 
   private ClientDetails getClientDetailsInRedis(String authorization) {

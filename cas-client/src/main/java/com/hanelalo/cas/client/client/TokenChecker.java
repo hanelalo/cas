@@ -2,57 +2,71 @@ package com.hanelalo.cas.client.client;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.hanelalo.cas.client.annotation.ModeEnum;
+import com.google.common.collect.Lists;
+import com.hanelalo.cas.client.annotation.AuthorityPair;
+import com.hanelalo.cas.client.api.Authority;
 import com.hanelalo.cas.client.api.TokenInfoResp;
 import com.hanelalo.cas.client.exception.CasClientPreconditions;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class TokenChecker {
 
-  private static String CS_0001 = "CS_0001";
-  private static String CS_0003 = "CS_0003";
-  private static String CS_0004 = "CS_0004";
+    private static String CS_0001 = "CS_0001";
+    private static String CS_0003 = "CS_0003";
+    private static String CS_0004 = "CS_0004";
 
-  public void checkToken(TokenInfoResp result, List<String> roles, ModeEnum mode) {
-    chechError(result);
-    String authRoles = Joiner.on(",").skipNulls().join(result.getRoles());
-    CasClientPreconditions.checkTokenPermission(!Strings.isNullOrEmpty(authRoles));
-    roles = roles.stream().distinct().collect(Collectors.toList());
-    if (mode.equals(ModeEnum.AND)) {
-      computeRoleModeAND(authRoles, roles);
-    } else if (mode.equals(ModeEnum.NOT)) {
-      computeRoleModeNOT(authRoles, roles);
-    } else {
-      computeRoleModeOR(authRoles, roles);
+    public void checkToken(TokenInfoResp result, List<AuthorityPair> authorityPairs) {
+        chechError(result);
+        List<Authority> authorities = result.getAuthorities();
+        check(authorities, authorityPairs);
     }
-  }
 
-  private void chechError(TokenInfoResp result) {
-    if (result.getError() != null) {
-      CasClientPreconditions.checkClientInvalid(!CS_0001.equals(result.getError().getErrorCode()));
-      CasClientPreconditions.checkServerError(!CS_0003.equals(result.getError().getErrorCode()));
-      CasClientPreconditions.checkTokenInvalid(!CS_0004.equals(result.getError().getErrorCode()));
+    private void check(List<Authority> authorities, List<AuthorityPair> authorityPairs) {
+        if (CollectionUtils.isEmpty(authorityPairs)) {
+            return;
+        }
+        if (CollectionUtils.isEmpty(authorities)) {
+            CasClientPreconditions.checkTokenPermission(false);
+        }
+        Map<String, String> hasAuthorities = convertAuthorityPairs(authorities);
+        authorityPairs.forEach(authorityPair -> {
+            String value = hasAuthorities.get(authorityPair.authorityKey());
+            CasClientPreconditions.checkTokenPermission(compare(Integer.parseInt(value),
+                    Integer.parseInt(authorityPair.authorityValue())));
+        });
     }
-  }
 
-  private void computeRoleModeNOT(String authRoles, List<String> roles) {
-    roles.forEach(role -> {
-      CasClientPreconditions.checkTokenPermission(!authRoles.contains(role));
-    });
-  }
+    private boolean compare(int value, int authorityValue) {
+        String hasAuthority = Integer.toBinaryString(value);
+        String needAuthority = Integer.toBinaryString(authorityValue);
+        int maxLen = needAuthority.length() - hasAuthority.length() >= 0 ? needAuthority.length() : hasAuthority.length();
+        char[] hasAuthorityBits = Strings.padStart(hasAuthority, maxLen, '0').toCharArray();
+        char[] needAuthorityBits = Strings.padStart(needAuthority, maxLen, '0').toCharArray();
+        for (int i = 0; i < maxLen; i++) {
+            if (needAuthorityBits[i] == '1' && hasAuthorityBits[i] != '1') {
+                return false;
+            }
+        }
+        return true;
+    }
 
-  private void computeRoleModeAND(String authRoles, List<String> roles) {
-    List<String> collect = roles.stream().filter(authRoles::contains)
-        .collect(Collectors.toList());
-    CasClientPreconditions.checkTokenPermission(collect.size() == roles.size());
-  }
+    private Map<String, String> convertAuthorityPairs(List<Authority> authorities) {
+        return authorities.stream().collect(Collectors.toMap(Authority::getAuthorityKey, Authority::getAuthorityValue));
+    }
 
-  private void computeRoleModeOR(String authRoles, List<String> roles) {
-    List<String> collect = roles.stream().filter(authRoles::contains)
-        .collect(Collectors.toList());
-    CasClientPreconditions.checkTokenPermission(collect.size() > 0);
-  }
+    private void chechError(TokenInfoResp result) {
+        if (result.getError() != null) {
+            CasClientPreconditions.checkClientInvalid(!CS_0001.equals(result.getError().getErrorCode()));
+            CasClientPreconditions.checkServerError(!CS_0003.equals(result.getError().getErrorCode()));
+            CasClientPreconditions.checkTokenInvalid(!CS_0004.equals(result.getError().getErrorCode()));
+        }
+    }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-  @Autowired
+  @Autowired(required = false)
   private CasServerConfigurer casServerConfigurer;
   @Autowired
   private CasHandlerRegistry casHandlerRegistry;
@@ -23,7 +23,8 @@ public class WebConfig implements WebMvcConfigurer {
         .excludePathPatterns("/registerClient", "/swagger-ui.html", "/swagger-ui.html/**",
             "/swagger-resources/**", "/v2/**", "/swagger-ui.html#!/**", "/webjars/**",
             "/swagger-resources/**");
-    casServerConfigurer.addHandler(casHandlerRegistry);
+    if(null != casServerConfigurer) {
+      casServerConfigurer.addHandler(casHandlerRegistry);
+    }
   }
-
 }

@@ -1,6 +1,8 @@
 package com.hanelalo.cas.server.service.core;
 
 import com.google.common.collect.Lists;
+import com.hanelalo.cas.server.user.Authority;
+
 import java.util.List;
 
 public class TokenInfo {
@@ -9,7 +11,7 @@ public class TokenInfo {
   private String userId;
   private long createDate;
   private long validTime;
-  private List<String> roles = Lists.newArrayList();
+  private List<Authority> authorities = Lists.newArrayList();
 
   /**
    * Get clientId
@@ -51,7 +53,7 @@ public class TokenInfo {
   }
 
   /**
-   * @param createDate
+   * @param createDate createDate
    * @return this
    **/
   public TokenInfo setCreateDate(long createDate) {
@@ -67,7 +69,7 @@ public class TokenInfo {
   }
 
   /**
-   * @param validTime
+   * @param validTime validTime
    * @return this
    **/
   public TokenInfo setValidTime(long validTime) {
@@ -76,18 +78,19 @@ public class TokenInfo {
   }
 
   /**
-   * Get roles
+   * Get authorities
    **/
-  public List<String> getRoles() {
-    return roles;
+  public List<Authority> getAuthorities() {
+    return authorities;
   }
 
   /**
-   * @param roles
+   * @param authorities authorities
    * @return this
    **/
-  public TokenInfo setRoles(List<String> roles) {
-    this.roles = roles;
+  public TokenInfo setAuthorities(List<Authority> authorities) {
+    this.authorities = authorities;
     return this;
   }
+
 }

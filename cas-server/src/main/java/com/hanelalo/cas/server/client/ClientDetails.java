@@ -9,7 +9,6 @@ public class ClientDetails implements Serializable {
   private String clientId;
   private String clientSecret;
   private String grantType;
-  private String userTableName;
   private String valid;
 
   /**
@@ -57,22 +56,6 @@ public class ClientDetails implements Serializable {
    **/
   public ClientDetails setGrantType(String grantType) {
     this.grantType = grantType;
-    return this;
-  }
-
-  /**
-   * Get userTableName
-   **/
-  public String getUserTableName() {
-    return userTableName;
-  }
-
-  /**
-   * @param userTableName
-   * @return this
-   **/
-  public ClientDetails setUserTableName(String userTableName) {
-    this.userTableName = userTableName;
     return this;
   }
 

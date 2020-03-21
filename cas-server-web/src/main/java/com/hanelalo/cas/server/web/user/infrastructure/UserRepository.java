@@ -1,4 +1,4 @@
-package com.hanelalo.cas.server.user.infrastructure;
+package com.hanelalo.cas.server.web.user.infrastructure;
 
 
 import com.hanelalo.cas.server.client.ClientDetails;
@@ -38,7 +38,7 @@ public class UserRepository implements UserLoader {
   }
 
   private String getTableName() {
-    return CasRequestContext.get(ClientDetails.class).getUserTableName();
+    return "users";
   }
 
   class UserRowMapper implements RowMapper<User> {

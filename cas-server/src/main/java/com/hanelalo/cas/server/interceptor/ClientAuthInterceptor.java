@@ -4,6 +4,7 @@ import com.google.common.base.Strings;
 import com.hanelalo.cas.server.base.exception.CasServerException;
 import com.hanelalo.cas.server.base.exception.CasServerExceptionEnum;
 import com.hanelalo.cas.server.base.exception.CasServerPreconditions;
+import com.hanelalo.cas.server.client.Client;
 import com.hanelalo.cas.server.client.ClientDetails;
 import com.hanelalo.cas.server.context.CasApplicationContext;
 import com.hanelalo.cas.server.context.CasRequestContext;
@@ -30,6 +31,7 @@ public class ClientAuthInterceptor implements HandlerInterceptor {
 
   private void setClientDetails(String authorization) {
     ClientDetails clientDetails = getClientDetailsInRedis(authorization);
+    CasRequestContext.setLocalThreadValue(new Client(clientDetails.getClientId()));
     CasRequestContext.setLocalThreadValue(clientDetails);
   }
 

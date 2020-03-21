@@ -8,9 +8,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="cas-client" />
+        <module name="cas-server-web" />
         <module name="cas-server" />
         <module name="cas-client-web" />
-        <module name="cas-server-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

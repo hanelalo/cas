@@ -11,5 +11,4 @@ public class CasServerWebApplication {
   public static void main(String[] args) {
     SpringApplication.run(CasServerWebApplication.class, args);
   }
-
 }

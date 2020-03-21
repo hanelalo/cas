@@ -15,12 +15,10 @@ create table cas_client_details
     CLIENT_ID       varchar(64) primary key,
     CLIENT_SECRET   varchar(64) not null,
     GRANT_TYPE      varchar(50) not null,
-    VALID           varchar(2)  not null,
-    USER_TABLE_NAME varchar(20)
+    VALID           varchar(2)  not null
 );
 
 insert into cas_client_details value ('948fe603f61dc036b5c596dc09fe3ce3f3d30dc90f024c85f3c82db2ccab679d',
                                       '83d151a98eac0d0cd336a12859ee555ca1c07ecbc7e5a79fe1fba23098d38ea7',
                                       'password,refresh_token',
-                                      '1',
-                                      'users');
+                                      '1');

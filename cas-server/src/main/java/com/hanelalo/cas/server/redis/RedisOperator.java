@@ -1,6 +1,5 @@
 package com.hanelalo.cas.server.redis;
 
-import com.google.common.collect.Lists;
 import com.hanelalo.cas.server.client.ClientDetailService;
 import com.hanelalo.cas.server.client.ClientDetails;
 import java.util.HashMap;

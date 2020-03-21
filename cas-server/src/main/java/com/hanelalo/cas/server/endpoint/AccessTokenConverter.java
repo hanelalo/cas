@@ -13,8 +13,7 @@ public class AccessTokenConverter{
         .setUser(accessToken.getUser())
         .setAccessToken(accessToken.getAccessToken())
         .setRefreshToken(refreshToken)
-        .setJti(accessToken.getJti())
-        .setRoles(accessToken.getRoles());
+        .setJti(accessToken.getJti());
   }
 
 }

@@ -1,6 +1,5 @@
 package com.hanelalo.cas.client.client;
 
-import com.hanelalo.cas.client.api.CasServerResult;
 import com.hanelalo.cas.client.api.TokenInfoReq;
 import com.hanelalo.cas.client.api.TokenInfoResp;
 import com.hanelalo.cas.client.config.CasClientProperties;
@@ -24,10 +23,10 @@ public class CasServerRestInvoker implements CasServerInvoker {
   public TokenInfoResp getTokenInfo(TokenInfoReq req) {
     PropertiesPreconditions.checkClientProperties();
     MultiValueMap<String, String> headers = buildHeaders();
-    return getTokenInfo(req, headers);
+    return getTokenInfoResp(req, headers);
   }
 
-  private TokenInfoResp getTokenInfo(TokenInfoReq req, MultiValueMap<String, String> headers) {
+  private TokenInfoResp getTokenInfoResp(TokenInfoReq req, MultiValueMap<String, String> headers) {
     HttpEntity<TokenInfoReq> entity = new HttpEntity<>(req, headers);
     return restTemplate.postForEntity(properties.getTokenInfoPath(), entity,
         TokenInfoResp.class).getBody();

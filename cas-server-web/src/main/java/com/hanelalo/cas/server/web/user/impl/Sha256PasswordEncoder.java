@@ -1,9 +1,7 @@
-package com.hanelalo.cas.server.user.impl;
+package com.hanelalo.cas.server.web.user.impl;
 
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-import com.hanelalo.cas.server.base.exception.CasServerException;
-import com.hanelalo.cas.server.base.exception.CasServerExceptionEnum;
 import com.hanelalo.cas.server.base.exception.CasServerPreconditions;
 import com.hanelalo.cas.server.user.PasswordEncoder;
 import org.springframework.stereotype.Component;

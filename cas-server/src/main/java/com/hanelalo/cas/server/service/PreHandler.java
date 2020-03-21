@@ -1,7 +1,5 @@
 package com.hanelalo.cas.server.service;
 
-public interface PreHandler {
-
-  void preHandle();
-
+public abstract class PreHandler {
+  public abstract void preHandle();
 }

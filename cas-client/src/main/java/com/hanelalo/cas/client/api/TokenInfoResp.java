@@ -11,7 +11,7 @@ public class TokenInfoResp extends CasServerResult {
   private String userId;
   private long createDate;
   private long validTime;
-  private List<String> roles = Lists.newArrayList();
+  private List<Authority> authorities = Lists.newArrayList();
   /**
    * Get clientId
    **/
@@ -76,19 +76,12 @@ public class TokenInfoResp extends CasServerResult {
     return this;
   }
 
-  /**
-   * Get roles
-   **/
-  public List<String> getRoles() {
-    return roles;
+  public List<Authority> getAuthorities() {
+    return authorities;
   }
 
-  /**
-   * @param roles
-   * @return this
-   **/
-  public TokenInfoResp setRoles(List<String> roles) {
-    this.roles = roles;
+  public TokenInfoResp setAuthorities(List<Authority> authorities) {
+    this.authorities = authorities;
     return this;
   }
 }

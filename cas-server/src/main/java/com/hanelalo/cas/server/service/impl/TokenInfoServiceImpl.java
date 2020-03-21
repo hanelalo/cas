@@ -1,10 +1,8 @@
 package com.hanelalo.cas.server.service.impl;
 
+import com.hanelalo.cas.server.base.TokenProcessorSupplier;
 import com.hanelalo.cas.server.base.exception.CasServerPreconditions;
 import com.hanelalo.cas.server.base.token.Payload;
-import com.hanelalo.cas.server.base.exception.CasServerException;
-import com.hanelalo.cas.server.base.exception.CasServerExceptionEnum;
-import com.hanelalo.cas.server.base.token.TokenProcessor;
 import com.hanelalo.cas.server.config.AuthServerProperties;
 import com.hanelalo.cas.server.service.TokenInfoService;
 import com.hanelalo.cas.server.service.core.TokenInfo;
@@ -18,11 +16,11 @@ public class TokenInfoServiceImpl implements TokenInfoService {
   private AuthServerProperties properties;
 
   @Autowired
-  private TokenProcessor tokenProcessor;
+  private TokenProcessorSupplier tokenProcessorSupplier;
 
   @Override
   public TokenInfo tokenInfo(String token) {
-    Payload payload = tokenProcessor.readPayload(token);
+    Payload payload = tokenProcessorSupplier.get().readPayload(token);
     checkToken(payload);
     return convert2TokenInfo(payload);
   }
@@ -39,7 +37,7 @@ public class TokenInfoServiceImpl implements TokenInfoService {
         .setClientId(payload.getClientId())
         .setCreateDate(payload.getCreateDate())
         .setValidTime(payload.getValidTime())
-        .setRoles(payload.getRoles())
+        .setAuthorities(payload.getAuthorities())
         .setUserId(payload.getUserId());
   }
 }

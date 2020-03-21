@@ -18,8 +18,9 @@ public class TokenInfoResp extends CasServerResult {
   private long createDate;
   @ApiModelProperty("token有效期（ms）")
   private long validTime;
-  @ApiModelProperty("用户角色")
-  private List<String> roles = Lists.newArrayList();
+  @ApiModelProperty("用户权限")
+  private List<AuthorityDto> authorities = Lists.newArrayList();
+
   /**
    * Get clientId
    **/
@@ -28,7 +29,7 @@ public class TokenInfoResp extends CasServerResult {
   }
 
   /**
-   * @param clientId
+   * @param clientId clientId
    * @return this
    **/
   public TokenInfoResp setClientId(String clientId) {
@@ -44,7 +45,7 @@ public class TokenInfoResp extends CasServerResult {
   }
 
   /**
-   * @param userId
+   * @param userId userId
    * @return this
    **/
   public TokenInfoResp setUserId(String userId) {
@@ -60,7 +61,7 @@ public class TokenInfoResp extends CasServerResult {
   }
 
   /**
-   * @param createDate
+   * @param createDate createDate
    * @return this
    **/
   public TokenInfoResp setCreateDate(long createDate) {
@@ -76,7 +77,7 @@ public class TokenInfoResp extends CasServerResult {
   }
 
   /**
-   * @param validTime
+   * @param validTime validTime
    * @return this
    **/
   public TokenInfoResp setValidTime(long validTime) {
@@ -85,18 +86,18 @@ public class TokenInfoResp extends CasServerResult {
   }
 
   /**
-   * Get roles
+   * Get authorities
    **/
-  public List<String> getRoles() {
-    return roles;
+  public List<AuthorityDto> getAuthorities() {
+    return authorities;
   }
 
   /**
-   * @param roles
+   * @param authorities authorities
    * @return this
    **/
-  public TokenInfoResp setRoles(List<String> roles) {
-    this.roles = roles;
+  public TokenInfoResp setAuthorities(List<AuthorityDto> authorities) {
+    this.authorities = authorities;
     return this;
   }
 }

@@ -12,7 +12,6 @@ import org.springframework.core.annotation.AliasFor;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-public @interface RoleAccess {
-  String[] roles() default {};
-  ModeEnum mode() default ModeEnum.OR;
+public @interface Authorities {
+  AuthorityPair[] value();
 }

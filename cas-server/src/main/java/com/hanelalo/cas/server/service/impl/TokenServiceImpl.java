@@ -1,6 +1,7 @@
 package com.hanelalo.cas.server.service.impl;
 
-import com.hanelalo.cas.server.base.token.TokenProcessor;
+import com.hanelalo.cas.server.base.TokenProcessorSupplier;
+import com.hanelalo.cas.server.context.CasRequestContext;
 import com.hanelalo.cas.server.service.CasHandlerRegistry;
 import com.hanelalo.cas.server.service.TokenService;
 import com.hanelalo.cas.server.service.core.AccessToken;
@@ -16,7 +17,7 @@ public class TokenServiceImpl implements TokenService {
   @Autowired
   private UserDetailService userDetailService;
   @Autowired
-  private TokenProcessor tokenProcessor;
+  private TokenProcessorSupplier tokenProcessorSupplier;
   @Autowired
   private PasswordEncoder passwordEncoder;
   @Autowired
@@ -27,8 +28,9 @@ public class TokenServiceImpl implements TokenService {
     preHandler();
     UserDetails details = userDetailService.loadUser(userId);
     passwordEncoder.valid(details.getPassword(),password);
+    CasRequestContext.setLocalThreadValue(details);
     postHandler();
-    return tokenProcessor.buildAccessToken(details);
+    return tokenProcessorSupplier.get().buildAccessToken(details);
   }
 
   private void postHandler() {

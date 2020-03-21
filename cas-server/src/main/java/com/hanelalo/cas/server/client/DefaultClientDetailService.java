@@ -49,8 +49,7 @@ public class DefaultClientDetailService implements ClientDetailService<ClientDet
     Object[] args = new Object[]{
         details.getClientSecret(),
         details.getGrantType(),
-        details.getValid(),
-        details.getUserTableName()};
+        details.getValid()};
     int[] argTypes = new int[]{Types.VARCHAR, Types.VARCHAR,
         Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
     jdbcTemplate.update(sql.toString(), args, argTypes);
@@ -77,15 +76,13 @@ public class DefaultClientDetailService implements ClientDetailService<ClientDet
       details.setClientSecret(resultSet.getString(Column.CLIENT_SECRET.getValue()));
       details.setGrantType(resultSet.getString(Column.GRANT_TYPE.getValue()));
       details.setValid(resultSet.getString(Column.VALID.getValue()));
-      details.setUserTableName(resultSet.getString(Column.USER_TABLE_NAME.getValue()));
       return details;
     }
   }
 
   enum Column {
     CLIENT_ID("CLIENT_ID"), CLIENT_SECRET("CLIENT_SECRET"),
-    GRANT_TYPE("GRANT_TYPE"), VALID("VALID"),
-    USER_TABLE_NAME("USER_TABLE_NAME");
+    GRANT_TYPE("GRANT_TYPE"), VALID("VALID");
     private String value;
 
     Column(String value) {

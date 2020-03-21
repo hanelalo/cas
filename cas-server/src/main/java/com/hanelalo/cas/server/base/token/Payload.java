@@ -2,6 +2,8 @@ package com.hanelalo.cas.server.base.token;
 
 
 import com.google.common.collect.Lists;
+import com.hanelalo.cas.server.user.Authority;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,7 +14,7 @@ public class Payload implements Serializable {
   private String userId;
   private long createDate;
   private long validTime;
-  private List<String> roles = Lists.newArrayList();
+  private List<Authority> authorities = Lists.newArrayList();
   private String accessToken="";
 
   /**
@@ -79,19 +81,12 @@ public class Payload implements Serializable {
     return this;
   }
 
-  /**
-   * Get roles
-   **/
-  public List<String> getRoles() {
-    return roles;
+  public List<Authority> getAuthorities() {
+    return authorities;
   }
 
-  /**
-   * @param roles
-   * @return this
-   **/
-  public Payload setRoles(List<String> roles) {
-    this.roles = roles;
+  public Payload setAuthorities(List<Authority> authorities) {
+    this.authorities = authorities;
     return this;
   }
 

@@ -1,19 +1,16 @@
-package com.hanelalo.cas.server.user.impl;
+package com.hanelalo.cas.server.web.user.impl;
 
-import com.google.common.base.Splitter;
-import com.google.common.collect.Lists;
-import com.hanelalo.cas.server.user.core.DefaultRole;
-import com.hanelalo.cas.server.user.core.DefaultUserDetails;
-import com.hanelalo.cas.server.user.infrastructure.User;
+import com.hanelalo.cas.server.client.ClientPoint;
 import com.hanelalo.cas.server.user.UserDetailService;
 import com.hanelalo.cas.server.user.UserDetails;
-import com.hanelalo.cas.server.user.infrastructure.UserLoader;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.hanelalo.cas.server.web.user.core.DefaultUserDetails;
+import com.hanelalo.cas.server.web.user.infrastructure.User;
+import com.hanelalo.cas.server.web.user.infrastructure.UserLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@ClientPoint(clientId = "948fe603f61dc036b5c596dc09fe3ce3f3d30dc90f024c85f3c82db2ccab679d")
 public class JdbcUserDetailService implements UserDetailService {
 
   @Autowired
@@ -27,14 +24,10 @@ public class JdbcUserDetailService implements UserDetailService {
 
   private UserDetails convert(User user) {
     DefaultUserDetails details = new DefaultUserDetails();
-    List<DefaultRole> roles = Splitter
-        .on(",").splitToList(user.getRoles())
-        .stream().map(role -> new DefaultRole().setRole(role))
-        .collect(Collectors.toList());
+
     return details
         .setUserId(user.getUserId())
         .setPassword(user.getPassword())
-        .setUsername(user.getUsername())
-        .setRoles(roles);
+        .setUsername(user.getUsername());
   }
 }

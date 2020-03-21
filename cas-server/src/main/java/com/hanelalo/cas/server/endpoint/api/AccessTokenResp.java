@@ -17,8 +17,6 @@ public class AccessTokenResp extends CasServerResult {
   private String jti;
   @ApiModelProperty("token")
   private String accessToken;
-  @ApiModelProperty("用户角色")
-  private List<String> roles = Lists.newArrayList();
   @ApiModelProperty("刷新token")
   private RefreshToken refreshToken;
 
@@ -67,22 +65,6 @@ public class AccessTokenResp extends CasServerResult {
    **/
   public AccessTokenResp setAccessToken(String accessToken) {
     this.accessToken = accessToken;
-    return this;
-  }
-
-  /**
-   * Get roles
-   **/
-  public List<String> getRoles() {
-    return roles;
-  }
-
-  /**
-   * @param roles
-   * @return this
-   **/
-  public AccessTokenResp setRoles(List<String> roles) {
-    this.roles = roles;
     return this;
   }
 

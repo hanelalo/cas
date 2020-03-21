@@ -3,29 +3,16 @@ package com.hanelalo.cas.server.base.token;
 import com.google.common.collect.Maps;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-import com.hanelalo.cas.server.base.exception.CasServerException;
-import com.hanelalo.cas.server.base.exception.CasServerExceptionEnum;
-import com.hanelalo.cas.server.base.exception.CasServerPreconditions;
-import com.hanelalo.cas.server.client.ClientDetails;
 import com.hanelalo.cas.server.config.AuthServerProperties;
-import com.hanelalo.cas.server.context.CasRequestContext;
 import com.hanelalo.cas.server.service.core.AccessToken;
-import com.hanelalo.cas.server.user.RoleType;
 import com.hanelalo.cas.server.user.UserDetails;
-import com.hanelalo.cas.server.user.core.DefaultUserDetails;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
-public class TokenProcessor {
+import java.util.Map;
+
+public abstract class AbstractTokenProcessor {
 
   private static final String TOKEN_TYPE = "Bearer ";
-  @Autowired
   private TokenHelper tokenHelper;
-  @Autowired
   private AuthServerProperties properties;
 
   public AccessToken buildAccessToken(UserDetails details) {
@@ -49,7 +36,7 @@ public class TokenProcessor {
         .setRefreshToken(refreshToken)
         .setUser(payload.getUserId())
         .setJti(getJti(accessToken))
-        .setRoles(payload.getRoles());
+        .setAuthorities(payload.getAuthorities());
   }
 
   private String getJti(String accessToken) {
@@ -70,7 +57,8 @@ public class TokenProcessor {
     return headers;
   }
 
-  private Payload buildPayLoad(UserDetails details, String accessToken) {
+  public abstract Payload buildPayLoad(UserDetails details, String accessToken);
+  /*{
     CasServerPreconditions.checkClientError(details instanceof DefaultUserDetails);
     DefaultUserDetails defaultUserDetails = (DefaultUserDetails) details;
     ClientDetails client = CasRequestContext.get(ClientDetails.class);
@@ -83,5 +71,21 @@ public class TokenProcessor {
         .setUserId(defaultUserDetails.getUserId())
         .setAccessToken(accessToken)
         .setRoles(roles);
+  }*/
+
+  public TokenHelper getTokenHelper() {
+    return tokenHelper;
+  }
+
+  public void setTokenHelper(TokenHelper tokenHelper) {
+    this.tokenHelper = tokenHelper;
+  }
+
+  public AuthServerProperties getProperties() {
+    return properties;
+  }
+
+  public void setProperties(AuthServerProperties properties) {
+    this.properties = properties;
   }
 }

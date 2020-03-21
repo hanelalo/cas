@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.hanelalo</groupId>
     <artifactId>cas-base</artifactId>
-    <version>1.2.0-RELEASE</version>
+    <version>1.3.0-SNAPSHOT</version>
   </parent>
   <artifactId>cas-client</artifactId>
   <name>cas-client</name>

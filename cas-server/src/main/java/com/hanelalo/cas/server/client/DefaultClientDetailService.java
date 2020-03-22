@@ -21,7 +21,7 @@ public class DefaultClientDetailService implements ClientDetailService<ClientDet
   @Autowired
   private JdbcTemplate jdbcTemplate;
   private static final String DEFAULT_COLUMN =
-      "CLIENT_ID,CLIENT_SECRET,GRANT_TYPE,VALID,USER_TABLE_NAME";
+      "CLIENT_ID,CLIENT_SECRET,GRANT_TYPE,VALID";
 
   @Override
   public ClientDetails getClientDetails(String clientId, String clientSecret) {
